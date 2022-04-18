@@ -1,6 +1,6 @@
 const express = require('express');
 
-const hostname = '127.0.0.1';
+const hostname = '192.168.3.129';
 const port = 3306;
 
 const app = express();
@@ -22,6 +22,6 @@ app.get("/api/test", function (req, res) {
     res.send(cat);
 });
 
-app.listen(port, () => {
+app.listen(port, hostname, () => {
     console.log(`Server running at port:${port}/`);
 });
