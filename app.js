@@ -5,10 +5,22 @@ const port = 3306;
 
 const app = express();
 
-let cat = {
-    name: "Мурзик",
-    age: 2
+class Cat{
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    getAge(){
+        return this.age;
+    }
+
+    static compare(catA, catB) {
+        return catA.age-catB.age;
+    }
+
 };
+
 app.get("/", function (req, res) {
     //console.log(req);
     console.log("Server /")
@@ -19,9 +31,20 @@ app.get("/", function (req, res) {
 app.get("/api/test", function (req, res) {
     //console.log(req);
     console.log("Server /GET/api/test")
-    res.send(cat);
+    let cats =[];
+    cats.push(new Cat("Мурзик", 2));
+    cats.push(new Cat("Васька", 5));
+    cats.push(new Cat("Снежок", 1));
+
+    let result = "";
+    result += JSON.stringify(cats);
+    result += "<br>";
+    cats.sort(Cat.compare)
+    result += JSON.stringify(cats);
+
+    res.send(result);
 });
 
-app.listen(port, hostname, () => {
+app.listen(port,() => {
     console.log(`Server running at port:${port}/`);
 });
